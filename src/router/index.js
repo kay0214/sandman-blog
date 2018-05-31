@@ -1,15 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-
+import main from '@/components/main'
+import details from '@/components/Details'
+import MyHeader from '@/components/header/MyHeader'
+import searchBlogList from '@/components/SearchBlogList'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'default',
+      component: main
+    },
+    {
+      path: '/main',
+      name: 'main',
+      component: main
+    },
+    {
+      path: '/details/:bloggerId/:blogId',
+      name: 'details',
+      component: details
+    },
+    {
+      path: 'MyHeader',
+      name: 'MyHeader',
+      component: MyHeader
+    },
+    {
+      path: '/searchBlogList',
+      name: 'searchBlogList',
+      component: searchBlogList
     }
   ]
 })
