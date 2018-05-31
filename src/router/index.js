@@ -4,6 +4,7 @@ import main from '@/components/main'
 import details from '@/components/Details'
 import MyHeader from '@/components/header/MyHeader'
 import searchBlogList from '@/components/SearchBlogList'
+import userPage from '@/components/UserPage'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,11 @@ export default new Router({
       path: '/searchBlogList',
       name: 'searchBlogList',
       component: searchBlogList
+    },
+    {
+      path: '/userPage/:bloggerId',
+      name: 'userPage',
+      component: userPage
     }
   ]
 })

@@ -3,13 +3,13 @@
     <!-- 头部菜单栏 -->
     <MyHeader :one-key-word="keyWord" v-on:getKeyWord="getKeyWord"></MyHeader>
     <!-- 整体页面内容 -->
-    <el-row>
+    <el-row class="content">
       <!-- 内容左侧栏目 -->
       <el-col :span="5">
         <el-input type="text" placeholder="搜索资源关键词1" clearable></el-input>
       </el-col>
       <!-- 内容 -->
-      <el-col :span="14" class="content">
+      <el-col :span="14">
         <!-- 博文数据循环 -->
         <template v-for='(item,id) in blogData'>
           <div v-bind:key="id">
@@ -97,14 +97,11 @@
       }
     },
     created () {
-      console.info('enter')
       let keyWord = this.$route.params.keyWord
       if(keyWord !== null && keyWord !== '' && keyWord !== undefined){
         this.keyWord = keyWord
       }
-      console.info('keyword:'+this.keyWord)
       this.dataInit()
-      console.info(this.keyWord)
     },
     mounted () {
       if (screen.width < 800) {

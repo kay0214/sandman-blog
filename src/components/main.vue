@@ -3,13 +3,13 @@
     <!-- 头部菜单栏 -->
     <MyHeader :one-key-word="keyWord" v-on:getKeyWord="getKeyWord"></MyHeader>
     <!-- 整体页面内容 -->
-    <el-row>
+    <el-row class="content">
       <!-- 内容左侧栏目 -->
       <el-col :span="5">
         <el-input type="text" placeholder="搜索资源关键词1" clearable></el-input>
       </el-col>
       <!-- 内容 -->
-      <el-col :span="14" class="content">
+      <el-col :span="14">
         <!-- 轮播图数据 -->
         <template>
           <el-carousel :interval="5000" arrow="always">
@@ -37,7 +37,7 @@
                 <img width="30px" height="30px" v-bind:src="item.blogger.imageUrl"/>
               </el-col>
               <!-- 用户昵称 -->
-              <el-col :span="4">{{item.blogger.nickName}}</el-col>
+              <el-col :span="4"><router-link class="aTagWithoutLine" :to="{path:'/userPage/'+item.bloggerId}">{{item.blogger.nickName}}</router-link></el-col>
               <!-- 发表时间 -->
               <el-col :span="8">{{item.createTime}}</el-col>
               <!-- 阅读数 -->
