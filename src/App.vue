@@ -18,4 +18,18 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+.aTagWithoutLine{
+  text-decoration: none;
+  color: black;
+  font-family: 黑体;
+}
+.textBlue{
+  color: blue;
+}
+.textRed{
+  color: red;
+}
+.text12px{
+  size: 12px;
+}
 </style>

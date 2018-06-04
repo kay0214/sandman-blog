@@ -115,7 +115,4 @@
   .content{
     margin-top: 1em;
   }
-  .aTagWithoutLine{
-    text-decoration: none;
-  }
 </style>

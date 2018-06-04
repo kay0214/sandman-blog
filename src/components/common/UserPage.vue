@@ -115,11 +115,10 @@
           </el-col>
           <!-- 博文详细内容 -->
           <el-col :span="14" :offset="1">
-            <!-- 博文数据 -->
-            <el-card :body-style="{ padding: '0.5em' }" style="padding:1em">
-              <!-- 博文数据循环 -->
-              <template v-for='(item,id) in thisBlog'>
-                <div v-bind:key="id">
+            <!-- 博文数据循环 -->
+            <template v-for='(item,id) in thisBlog'>
+              <!-- 博文数据 -->
+              <el-card v-bind:key="id" :body-style="{ padding: '0.5em' }" style="padding:1em">
                   <!-- 标题 -->
                   <el-row style="text-align: left"><h2>
                     <router-link class="aTagWithoutLine" :to="{path:'/details/'+item.bloggerId+'/'+item.id}">{{item.title}}</router-link>
@@ -128,22 +127,15 @@
                   <el-row style="text-align: left">{{item.summary}}</el-row>
                   <!-- 用户头像，nickName，发表时间 ------  阅读数，评论数  -->
                   <el-row style="text-align: left;margin-top: 1em">
-                    <!-- 用户头像 -->
-                    <el-col :span="2">
-                      <img width="30px" height="30px" v-bind:src="item.blogger.imageUrl"/>
-                    </el-col>
-                    <!-- 用户昵称 -->
-                    <el-col :span="4"><router-link class="aTagWithoutLine" :to="{path:'/userPage/'+item.bloggerId}">{{item.blogger.nickName}}</router-link></el-col>
                     <!-- 发表时间 -->
                     <el-col :span="8">{{item.createTime}}</el-col>
                     <!-- 阅读数 -->
-                    <el-col :span="2" :offset="6">{{item.clickCount}} 阅读</el-col>
+                    <el-col :span="2" :offset="12">{{item.clickCount}} 阅读</el-col>
                     <!-- 评论数 -->
                     <el-col :span="2"> {{item.replayCount}} 评论</el-col>
                   </el-row>
-                </div>
-              </template>
-            </el-card>
+              </el-card>
+            </template>
           </el-col>
 
         </el-row>

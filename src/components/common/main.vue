@@ -85,13 +85,11 @@
       findBlogsByKeyWord () { // 根据关键词查询，模糊搜索
         this.$http.get('/api/blog/v1/blog/findByKeyWord?pageNumber=' + this.currentPage + '&size='+ this.pageSize + '&keyWord=' + this.keyWord).then((successData) => {
           this.blogData = successData.data.data;
-          console.info(this.blogData)
         })
       },
       getAllCarousel () { // 首页轮播图
         this.$http.get('/api/blog/v1/carousel/getAllCarousel').then((successData) => {
           this.imgCard = successData.data.data;
-          console.info(this.imgCard)
         })
       },
       dataInit () {
@@ -134,8 +132,5 @@
 <style scoped>
   .content{
     margin-top: 1em;
-  }
-  .aTagWithoutLine{
-    text-decoration: none;
   }
 </style>

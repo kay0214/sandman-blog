@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '@/components/main'
-import details from '@/components/Details'
+import main from '@/components/common/main'
+import details from '@/components/common/Details'
 import MyHeader from '@/components/header/MyHeader'
-import searchBlogList from '@/components/SearchBlogList'
-import userPage from '@/components/UserPage'
+import searchBlogList from '@/components/common/SearchBlogList'
+import userPage from '@/components/common/UserPage'
+import blogIndex from '@/components/blogger/BlogIndex'
+import writeBlog from '@/components/blogger/WriteBlog'
+import blogManage from '@/components/blogger/BlogManage'
+import commentManage from '@/components/blogger/CommentManage'
+import categoryManage from '@/components/blogger/CategoryManage'
+import login from '@/components/common/login'
+import register from '@/components/common/register'
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +46,43 @@ export default new Router({
       path: '/userPage/:bloggerId',
       name: 'userPage',
       component: userPage
+    },
+    {
+      path: '/blogIndex',
+      name: 'blogIndex',
+      component: blogIndex,
+      children: [
+        {
+          path: '/writeBlog',
+          name: 'writeBlog',
+          component: writeBlog
+        },
+        {
+          path: '/blogManage',
+          name: 'blogManage',
+          component: blogManage
+        },
+        {
+          path: '/commentManage',
+          name: 'commentManage',
+          component: commentManage
+        },
+        {
+          path: '/categoryManage',
+          name: 'categoryManage',
+          component: categoryManage
+        }
+      ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register
     }
   ]
 })

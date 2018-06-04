@@ -11,13 +11,17 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="main">首页</el-menu-item>
-          <el-menu-item index="myResources">我的资源</el-menu-item>
-          <el-menu-item index="upload">上传资源</el-menu-item>
-          <el-menu-item index="download">已下载</el-menu-item>
-          <el-menu-item index="gold">积分明细</el-menu-item>
-          <el-menu-item style="float: right" index="register">注册</el-menu-item>
-          <el-menu-item style="float: right" index="login">登录</el-menu-item>
+<!--
+          <img align="left" width="50px" height="50px" src="http://39.104.80.30/spkIMG/sandman/blog/content/7/20180530152641ED5D0ECCB7034FC5ACBC753BD9ECCA33.jpg"/>
+-->
+          <el-menu-item index="/main">首页</el-menu-item>
+          <el-menu-item index="/gold"><i class="el-icon-download"></i>下载</el-menu-item>
+          <el-menu-item index="/writeBlog"><i class="el-icon-document"></i>博客</el-menu-item>
+          <el-menu-item index="/upload"><i class="el-icon-share"></i>论坛</el-menu-item>
+          <el-menu-item v-if="!isLogin" style="float: right" index="/register">注册</el-menu-item>
+          <el-menu-item v-if="!isLogin" style="float: right" index="/login">登录</el-menu-item>
+          <el-menu-item v-else-if="isLogin" style="float: right" index="/logout">{{userName}}</el-menu-item>
+
           <div class="index-search">
             <el-input type="text" v-model="keyWord" placeholder="搜索资源关键词" clearable>
               <el-button slot="append" type="primary" @click="findBlogsByKeyWord" icon="el-icon-search"></el-button>
@@ -31,33 +35,48 @@
 
 <script>
 export default {
-  props: ['oneKeyWord'],
+  props: ['oneKeyWord','activeTopMenu'],
   methods: {
     handleSelect (key, keyPath) {
-      console.error(key)
-      if (key === 'logout') {
-        this.$http.get('/api/sandman/v1/user/logout')
-        this.globalObj_.userName = ''
-        this.globalObj_.isLogin = false
+
+      if (key === '/logout') {
+        this.$http.get('/api/blog/v1/user/logout')
         this.userName = ''
         this.isLogin = false
-        this.activeIndex = 'main'
-        this.$router.push('/main')
         return
       }
-      this.activeIndex = key
-      this.$router.push('/' + key)
+      if(this.isLogin){ // 已经登录
+        this.activeIndex = key
+        console.info('active = ' + this.activeIndex)
+        this.$router.push(key)
+      }else{ //未登录
+        if(key === '/register'){
+          this.$router.push('/register')
+        }else{
+          this.$router.push('/login')
+
+        }
+      }
+
     },
     findBlogsByKeyWord () {
       this.$emit('getKeyWord',this.keyWord)
+    },
+    getUserInfo () {
+      console.info('header getUserInfo()')
+      this.$http.get('/api/blog/v1/user/getCurUserInfo').then((response) => {
+        if (response.data.code === 200) {
+          this.userName = response.data.data.userName
+          this.isLogin = true
+        }
+      })
     }
   },
   data () {
     return {
-      activeIndex: 'main', // 初始化时menu的active
+      activeIndex: '/main', // 初始化时menu的active
       isLogin: false,
       userName: '',
-      password: '',
       keyWord: ''
     }
   },
@@ -65,11 +84,13 @@ export default {
     let key = this.oneKeyWord
     if(key !== null && key !== '' && key !== undefined){
       this.keyWord = key
-
     }
-    this.userName = this.globalObj_.userName
-    this.password = this.globalObj_.password
-    this.isLogin = this.globalObj_.isLogin
+    let activeTopMenu = this.activeTopMenu
+    if(activeTopMenu !== null && activeTopMenu !== '' && activeTopMenu !== undefined){
+      this.activeIndex = activeTopMenu
+    }
+    this.getUserInfo()
+
   }
 }
 </script>

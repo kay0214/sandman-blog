@@ -136,7 +136,7 @@
               <hr/>
               <!-- 博文正文 -->
               <el-row class="content">
-                <div class="text-left">{{thisBlog.content}}</div>
+                <div class="text-left" v-html="thisBlog.content"></div>
               </el-row>
               <!-- 博客关键词 -->
               <el-row class="content">
