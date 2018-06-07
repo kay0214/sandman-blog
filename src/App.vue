@@ -23,6 +23,9 @@ export default {
   color: black;
   font-family: 黑体;
 }
+.textColor999{
+  color: #999;
+}
 .textBlue{
   color: blue;
 }
@@ -31,5 +34,14 @@ export default {
 }
 .text12px{
   size: 12px;
+}
+.marginBottom1em{
+  margin-bottom: 1em;
+}
+.marginTopHalfem{
+  margin-top: 0.5em;
+}
+.marginTop1em{
+  margin-top: 1em;
 }
 </style>

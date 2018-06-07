@@ -23,13 +23,13 @@
         </template>
         <!-- 博文数据循环 -->
         <template v-for='(item,id) in blogData'>
-          <div v-bind:key="id">
+          <div v-bind:key="id" class="marginBottom1em">
             <!-- 标题 -->
             <el-row style="text-align: left"><h2>
               <router-link class="aTagWithoutLine" :to="{path:'/details/'+item.bloggerId+'/'+item.id}">{{item.title}}</router-link>
             </h2></el-row>
             <!-- 摘要 -->
-            <el-row style="text-align: left">{{item.summary}}</el-row>
+            <el-row style="text-align: left" class="textColor999">{{item.summary}}</el-row>
             <!-- 用户头像，nickName，发表时间 ------  阅读数，评论数  -->
             <el-row style="text-align: left;margin-top: 1em">
               <!-- 用户头像 -->
@@ -39,7 +39,7 @@
               <!-- 用户昵称 -->
               <el-col :span="4"><router-link class="aTagWithoutLine" :to="{path:'/userPage/'+item.bloggerId}">{{item.blogger.nickName}}</router-link></el-col>
               <!-- 发表时间 -->
-              <el-col :span="8">{{item.createTime}}</el-col>
+              <el-col :span="8">{{item.createTime | formatDate}}</el-col>
               <!-- 阅读数 -->
               <el-col :span="2" :offset="6">{{item.clickCount}} 阅读</el-col>
               <!-- 评论数 -->
@@ -69,6 +69,7 @@
   </div>
 </template>
 <script>
+  import {formatDate} from '../../common/dateFormat'
   export default {
     methods: {
       handleSizeChange (val) {
@@ -125,6 +126,12 @@
       if (screen.width < 800) {
         this.div_offset = 2
         this.div_span = 20
+      }
+    },
+    filters:{
+      formatDate(time){
+        let date = new Date(time);
+        return formatDate(date,'yyyy年MM月dd日 hh:mm:ss');
       }
     }
   }

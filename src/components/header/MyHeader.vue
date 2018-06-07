@@ -45,25 +45,20 @@ export default {
         this.isLogin = false
         return
       }
-      if(this.isLogin){ // 已经登录
-        this.activeIndex = key
-        console.info('active = ' + this.activeIndex)
-        this.$router.push(key)
-      }else{ //未登录
-        if(key === '/register'){
-          this.$router.push('/register')
-        }else{
+      if(!this.isLogin){ //未登录
+        if(key === '/writeBlog'){
           this.$router.push('/login')
-
+          return
         }
       }
-
+      this.activeIndex = key
+      console.info('active = ' + this.activeIndex)
+      this.$router.push(key)
     },
     findBlogsByKeyWord () {
       this.$emit('getKeyWord',this.keyWord)
     },
     getUserInfo () {
-      console.info('header getUserInfo()')
       this.$http.get('/api/blog/v1/user/getCurUserInfo').then((response) => {
         if (response.data.code === 200) {
           this.userName = response.data.data.userName

@@ -38,7 +38,7 @@ export default new Router({
       component: MyHeader
     },
     {
-      path: '/searchBlogList',
+      path: '/searchBlogList/:keyWord',
       name: 'searchBlogList',
       component: searchBlogList
     },

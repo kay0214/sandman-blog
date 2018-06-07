@@ -43,7 +43,7 @@
                         <div v-else-if="item.blogType===1">转载</div>
                       </el-col>
                       <!-- 时间 -->
-                      <el-col :span="6" :offset="1">{{item.createTime}}</el-col>
+                      <el-col :span="6" :offset="1">{{item.createTime | formatDate}}</el-col>
                       <!-- 阅读数 -->
                       <el-col :span="1" :offset="1"><i class="el-icon-view"></i>&nbsp;{{item.clickCount}}</el-col>
                       <!-- 评论数 -->
@@ -94,7 +94,7 @@
                         <div v-else-if="item.blogType===1">转载</div>
                       </el-col>
                       <!-- 时间 -->
-                      <el-col :span="6" :offset="1">{{item.createTime}}</el-col>
+                      <el-col :span="6" :offset="1">{{item.createTime | formatDate}}</el-col>
                       <!-- 阅读数 -->
                       <el-col :span="1" :offset="1"><i class="el-icon-view"></i>&nbsp;{{item.clickCount}}</el-col>
                       <!-- 评论数 -->
@@ -145,7 +145,7 @@
                         <div v-else-if="item.blogType===1">转载</div>
                       </el-col>
                       <!-- 时间 -->
-                      <el-col :span="6" :offset="1">{{item.createTime}}</el-col>
+                      <el-col :span="6" :offset="1">{{item.createTime | formatDate}}</el-col>
                       <!-- 阅读数 -->
                       <el-col :span="1" :offset="1"><i class="el-icon-view"></i>&nbsp;{{item.clickCount}}</el-col>
                       <!-- 评论数 -->
@@ -197,7 +197,7 @@
                         <div v-else-if="item.blogType===1">转载</div>
                       </el-col>
                       <!-- 时间 -->
-                      <el-col :span="6" :offset="1">{{item.createTime}}</el-col>
+                      <el-col :span="6" :offset="1">{{item.createTime | formatDate}}</el-col>
                       <!-- 阅读数 -->
                       <el-col :span="1" :offset="1"><i class="el-icon-view"></i>&nbsp;{{item.clickCount}}</el-col>
                       <!-- 评论数 -->
@@ -243,6 +243,7 @@
 </template>
 <script>
   import message from '../../common/message'
+  import {formatDate} from '../../common/dateFormat'
   export default {
     methods: {
       handleSizeChange (val) {
@@ -328,6 +329,12 @@
     },
     mounted () {
 
+    },
+    filters:{
+      formatDate(time){
+        let date = new Date(time);
+        return formatDate(date,'yyyy年MM月dd日 hh:mm:ss');
+      }
     }
   }
 </script>

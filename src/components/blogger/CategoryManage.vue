@@ -29,7 +29,7 @@
                 <el-col :span="4">{{item.categoryName}}</el-col>
                 <el-col :span="4" :offset="7">修改：删除</el-col>
                 <el-col :span="2">{{item.blogCount}}</el-col>
-                <el-col :span="6">{{item.createTime}}</el-col>
+                <el-col :span="6">{{item.createTime | formatDate}}</el-col>
               </el-row>
             </div>
           </template>
@@ -52,6 +52,7 @@
 </template>
 <script>
   import message from '../../common/message'
+  import {formatDate} from '../../common/dateFormat'
   export default {
     methods: {
       addCategory () {
@@ -108,6 +109,12 @@
     },
     mounted () {
 
+    },
+    filters:{
+      formatDate(time){
+        let date = new Date(time);
+        return formatDate(date,'yyyy年MM月dd日 hh:mm:ss');
+      }
     }
   }
 </script>

@@ -9,7 +9,9 @@ import globalObj from './common/globalObj'
 import MyHeader from './components/header/MyHeader'
 import axios from 'axios'
 import message from './common/message'
+import userDetils from './components/common/userDetils'
 
+Vue.component('UserDetils', userDetils)
 Vue.component('MyHeader', MyHeader)
 Vue.config.productionTip = false
 Vue.prototype.globalObj_ = globalObj

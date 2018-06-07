@@ -28,7 +28,7 @@
               <!-- 用户昵称 -->
               <el-col :span="4">{{item.blogger.nickName}}</el-col>
               <!-- 发表时间 -->
-              <el-col :span="8">{{item.createTime}}</el-col>
+              <el-col :span="8">{{item.createTime | formatDate}}</el-col>
               <!-- 阅读数 -->
               <el-col :span="2" :offset="6">{{item.clickCount}} 阅读</el-col>
               <!-- 评论数 -->
@@ -58,6 +58,7 @@
   </div>
 </template>
 <script>
+  import {formatDate} from '../../common/dateFormat'
   export default {
     methods: {
       handleSizeChange (val) {
@@ -77,6 +78,8 @@
         this.findBlogsByKeyWord()
       },
       getKeyWord (keyWord) {
+        this.keyWord = keyWord
+        this.findBlogsByKeyWord()
         this.$router.push({name:'searchBlogList',params: {keyWord: keyWord}})
       }
     },
@@ -104,9 +107,16 @@
       this.dataInit()
     },
     mounted () {
+      let keyWord = this.$route.params.keyWord
       if (screen.width < 800) {
         this.div_offset = 2
         this.div_span = 20
+      }
+    },
+    filters:{
+      formatDate(time){
+        let date = new Date(time);
+        return formatDate(date,'yyyy年MM月dd日 hh:mm:ss');
       }
     }
   }
