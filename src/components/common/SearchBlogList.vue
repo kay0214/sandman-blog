@@ -55,6 +55,7 @@
         :total="totalSize">
       </el-pagination>
     </div>
+    <MyFooter></MyFooter>
   </div>
 </template>
 <script>

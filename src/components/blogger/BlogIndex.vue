@@ -24,7 +24,7 @@
         </div>
       </el-col>
     </el-row>
-
+    <MyFooter></MyFooter>
   </div>
 </template>
 
