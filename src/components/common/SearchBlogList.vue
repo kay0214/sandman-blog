@@ -5,11 +5,26 @@
     <!-- 整体页面内容 -->
     <el-row class="content">
       <!-- 内容左侧栏目 -->
-      <el-col :span="5">
-        <el-input type="text" placeholder="搜索资源关键词1" clearable></el-input>
+      <el-col :span="3" :offset="1">
+        <el-card>
+          <el-row class="marginBottom1em">公告栏</el-row>
+          <el-row>
+            <template v-if="noticeList.length > 0">
+              <el-collapse v-for="(item,id) in noticeList" v-bind:key="id">
+                <el-collapse-item :title="item.title">
+                  <div>{{item.content}}</div>
+                </el-collapse-item>
+              </el-collapse>
+            </template>
+            <template v-else>
+              暂无任何公告
+            </template>
+          </el-row>
+
+        </el-card>
       </el-col>
       <!-- 内容 -->
-      <el-col :span="14">
+      <el-col :span="14" :offset="1">
         <!-- 博文数据循环 -->
         <template v-for='(item,id) in blogData'>
           <div v-if="item.isDraft !== 1 && item.onlyMeRead !== 1" v-bind:key="id">
@@ -38,8 +53,12 @@
         </template>
       </el-col>
       <!-- 内容右侧栏目 -->
-      <el-col :span="5">
-        <el-input type="text" placeholder="搜索资源关键词3" clearable></el-input>
+      <el-col :span="3" :offset="1">
+        <el-card>
+          <el-row>
+            <el-col>这里是越哥的征婚广告</el-col>
+          </el-row>
+        </el-card>
       </el-col>
     </el-row>
 
@@ -64,19 +83,26 @@
     methods: {
       handleSizeChange (val) {
         this.pageSize = val
-        // this.queryResource()
+        this.findBlogsByKeyWord()
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        // this.queryResource()
+        this.findBlogsByKeyWord()
+      },
+      getAllNotice () {
+        this.$http.get('/api/blog/v1/notice/getAllNotice').then((successData) => {
+          this.noticeList = successData.data.data;
+        })
       },
       findBlogsByKeyWord () { // 根据关键词查询，模糊搜索
         this.$http.get('/api/blog/v1/blog/findByKeyWord?pageNumber=' + this.currentPage + '&size='+ this.pageSize + '&keyWord=' + this.keyWord).then((successData) => {
-          this.blogData = successData.data.data;
+          this.blogData = successData.data.data.blogList;
+          this.totalSize = successData.data.data.totalRow
         })
       },
       dataInit () {
         this.findBlogsByKeyWord()
+        this.getAllNotice()
       },
       getKeyWord (keyWord) {
         this.keyWord = keyWord
@@ -93,6 +119,7 @@
         keyWord: '',
         imgCard: [],
         blogData: [],
+        noticeList: [],
         currentPage: 1,
         pageSize: 10,
         totalSize: 0
@@ -125,5 +152,6 @@
 <style scoped>
   .content{
     margin-top: 1em;
+    height: 40em;
   }
 </style>

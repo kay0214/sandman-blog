@@ -13,8 +13,6 @@
             <el-col :span="3"><i class="el-icon-phone"></i>13061408863</el-col>
             <el-col :span="3">QQ:929525390</el-col>
           </el-row>
-
-
         </el-row>
       </el-footer>
     </el-container>
