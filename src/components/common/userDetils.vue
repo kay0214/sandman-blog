@@ -96,6 +96,7 @@
       </div>
       <have-no-data v-if="newComment.length === 0"></have-no-data>
     </el-card>
+    <MyFooter></MyFooter>
   </el-col>
 </template>
 

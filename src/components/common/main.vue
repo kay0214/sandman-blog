@@ -70,6 +70,7 @@
             <el-col>这里是越哥的征婚广告</el-col>
           </el-row>
         </el-card>
+        <MyFooter></MyFooter>
       </el-col>
     </el-row>
 
@@ -85,7 +86,6 @@
         :total="totalSize">
       </el-pagination>
     </div>
-    <MyFooter></MyFooter>
   </div>
 </template>
 <script>

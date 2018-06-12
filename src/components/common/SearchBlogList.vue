@@ -59,22 +59,23 @@
             <el-col>这里是越哥的征婚广告</el-col>
           </el-row>
         </el-card>
+        <MyFooter></MyFooter>
       </el-col>
     </el-row>
-
-    <!-- 分页插件 -->
-    <div class="block">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalSize">
-      </el-pagination>
-    </div>
-    <MyFooter></MyFooter>
+    <el-row>
+      <!-- 分页插件 -->
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="totalSize">
+        </el-pagination>
+      </div>
+    </el-row>
   </div>
 </template>
 <script>
@@ -152,6 +153,5 @@
 <style scoped>
   .content{
     margin-top: 1em;
-    height: 40em;
   }
 </style>
