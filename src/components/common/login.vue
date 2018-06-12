@@ -45,8 +45,8 @@ export default {
           this.globalObj_.userName = this.username
           this.globalObj_.isLogin = true
           console.info(this.globalObj_.userName)
-          this.$router.go(-1)
-          // this.$router.push('/main')
+          // this.$router.go(-1)
+          this.$router.push('/main')
         }
       })
     },

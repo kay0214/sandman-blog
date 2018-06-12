@@ -77,6 +77,14 @@
         }else{
           onlyMeRead = 0
         }
+        if(this.selectCategory === null || this.selectCategory === '' || this.selectCategory === undefined){
+          message.errorMsg('个人分类不能为空','请先选择个人分类')
+          return
+        }
+        if(this.blogType === null || this.blogType === '' || this.blogType === undefined){
+          message.errorMsg('文章类型不能为空','请先选择文章类型')
+          return
+        }
         this.$http.post('/api/blog/v1/blog/saveBlog',{id: this.id, title: this.title, content: this.editor.txt.html(), contentNoTag: this.editor.txt.text(), isDraft: isDraft, blogType: this.blogType,
             onlyMeRead: onlyMeRead, categoryId: this.selectCategory, keyWord: this.keyWord}
           ).then((successData) => {
