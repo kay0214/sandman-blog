@@ -11,8 +11,8 @@ import axios from 'axios'
 import message from './common/message'
 import userDetils from './components/common/userDetils'
 import MyFooter from './components/footer/MyFooter'
-
-
+import Qs from 'qs'
+Vue.prototype.$Qs = Qs
 Vue.component('UserDetils', userDetils)
 Vue.component('MyHeader', MyHeader)
 Vue.component('MyFooter',MyFooter)

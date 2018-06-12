@@ -77,10 +77,9 @@
         }else{
           onlyMeRead = 0
         }
-        this.$http.post('/api/blog/v1/blog/saveBlog',
-          'id=' + this.id + '&title=' + this.title + '&content=' + escape(this.editor.txt.html())
-        + '&contentNoTag=' + this.editor.txt.text() + '&isDraft=' + isDraft + '&blogType=' + this.blogType
-        + '&onlyMeRead=' + onlyMeRead + '&categoryId=' + this.selectCategory + '&keyWord=' + this.keyWord).then((successData) => {
+        this.$http.post('/api/blog/v1/blog/saveBlog',{id: this.id, title: this.title, content: this.editor.txt.html(), contentNoTag: this.editor.txt.text(), isDraft: isDraft, blogType: this.blogType,
+            onlyMeRead: onlyMeRead, categoryId: this.selectCategory, keyWord: this.keyWord}
+          ).then((successData) => {
           if (successData.data.code !== 200) {
             return // 请求登录接口返回code!=200,停留在本页面提示用户重新登录
           }
@@ -133,7 +132,8 @@
       var E = require('wangeditor')
       this.editor = new E('#editor')
       this.editor.customConfig.zIndex = 100
-      this.editor.customConfig.uploadImgServer = 'http://localhost:8081/api/blog/v1/blog/uploadContentImg'
+      this.editor.customConfig.uploadImgServer = 'http://39.104.80.30:8081/api/blog/v1/blog/uploadContentImg'
+      // this.editor.customConfig.uploadImgServer = 'http://localhost:8081/api/blog/v1/blog/uploadContentImg'
       this.editor.customConfig.uploadFileName = 'files'
       this.editor.create()
     }
