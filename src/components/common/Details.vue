@@ -187,6 +187,7 @@
     created () {
       let bloggerId = this.$route.params.bloggerId
       let blogId = this.$route.params.blogId
+      console.info('blogId:::::::' + blogId)
       this.dataInit(blogId)
     },
     mounted () {

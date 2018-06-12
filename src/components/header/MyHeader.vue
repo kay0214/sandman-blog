@@ -15,13 +15,20 @@
           <img align="left" width="50px" height="50px" src="http://39.104.80.30/spkIMG/sandman/blog/content/7/20180530152641ED5D0ECCB7034FC5ACBC753BD9ECCA33.jpg"/>
 -->
           <el-menu-item index="/main">首页</el-menu-item>
-          <el-menu-item index="/gold"><i class="el-icon-download"></i>下载</el-menu-item>
+          <el-tooltip class="item" effect="dark" content="敬请期待" placement="top-end">
+            <el-menu-item index="/gold" :disabled="true"><i class="el-icon-download"></i>下载</el-menu-item>
+          </el-tooltip>
           <el-menu-item index="/writeBlog"><i class="el-icon-document"></i>博客</el-menu-item>
-          <el-menu-item index="/upload"><i class="el-icon-share"></i>论坛</el-menu-item>
+          <el-tooltip class="item" effect="dark" content="敬请期待" placement="top-end">
+            <el-menu-item index="/upload" :disabled="true"><i class="el-icon-share"></i>论坛</el-menu-item>
+          </el-tooltip>
           <el-menu-item v-if="!isLogin" style="float: right" index="/register">注册</el-menu-item>
           <el-menu-item v-if="!isLogin" style="float: right" index="/login">登录</el-menu-item>
-          <el-menu-item v-else-if="isLogin" style="float: right" index="/logout">{{userName}}</el-menu-item>
-
+          <el-submenu style="float: right" v-else-if="isLogin" index="/userInfo">
+            <template slot="title">{{user.userName}}</template>
+            <el-menu-item index="/modifyInfo">修改信息</el-menu-item>
+            <el-menu-item index="/logout">退出</el-menu-item>
+          </el-submenu>
           <div class="index-search">
             <el-input type="text" v-model="keyWord" placeholder="搜索资源关键词" clearable>
               <el-button slot="append" type="primary" @click="findBlogsByKeyWord" icon="el-icon-search"></el-button>
@@ -38,11 +45,15 @@ export default {
   props: ['oneKeyWord','activeTopMenu'],
   methods: {
     handleSelect (key, keyPath) {
-
+      if (key === '/modifyInfo') {
+        this.$router.push('modifyInfo')
+        return
+      }
       if (key === '/logout') {
         this.$http.get('/api/blog/v1/user/logout')
         this.userName = ''
         this.isLogin = false
+        this.$router.push('/main')
         return
       }
       if(!this.isLogin){ //未登录
@@ -52,7 +63,6 @@ export default {
         }
       }
       this.activeIndex = key
-      console.info('active = ' + this.activeIndex)
       this.$router.push(key)
     },
     findBlogsByKeyWord () {
@@ -61,7 +71,8 @@ export default {
     getUserInfo () {
       this.$http.get('/api/blog/v1/user/getCurUserInfo').then((response) => {
         if (response.data.code === 200) {
-          this.userName = response.data.data.userName
+          this.user = response.data.data
+          this.$emit('getUserInfo',this.user)
           this.isLogin = true
         }
       })
@@ -71,7 +82,7 @@ export default {
     return {
       activeIndex: '/main', // 初始化时menu的active
       isLogin: false,
-      userName: '',
+      user: '',
       keyWord: ''
     }
   },

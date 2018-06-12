@@ -78,7 +78,7 @@
           onlyMeRead = 0
         }
         this.$http.post('/api/blog/v1/blog/saveBlog',
-          'id=' + this.id + '&title=' + this.title + '&content=' + this.editor.txt.html()
+          'id=' + this.id + '&title=' + this.title + '&content=' + escape(this.editor.txt.html())
         + '&contentNoTag=' + this.editor.txt.text() + '&isDraft=' + isDraft + '&blogType=' + this.blogType
         + '&onlyMeRead=' + onlyMeRead + '&categoryId=' + this.selectCategory + '&keyWord=' + this.keyWord).then((successData) => {
           if (successData.data.code !== 200) {

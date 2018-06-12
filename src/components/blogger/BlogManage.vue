@@ -255,7 +255,7 @@
         this.getCategoryList()
       },
       getBlogList () {
-        this.$http.get('/api/blog/v1/blog/findByBloggerId?pageNumber=' + this.currentPage + '&size=' + this.pageSize).then((successData) => {
+        this.$http.get('/api/blog/v1/blog/findAllByBloggerId?pageNumber=' + this.currentPage + '&size=' + this.pageSize).then((successData) => {
           this.allBlogs = successData.data.data.blogList;
           this.totalSize = successData.data.data.totalRow
           this.blogClassify()

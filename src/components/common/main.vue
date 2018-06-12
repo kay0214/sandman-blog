@@ -5,16 +5,31 @@
     <!-- 整体页面内容 -->
     <el-row class="content">
       <!-- 内容左侧栏目 -->
-      <el-col :span="5">
-        <el-input type="text" placeholder="搜索资源关键词1" clearable></el-input>
+      <el-col :span="3" :offset="1">
+        <el-card>
+          <el-row class="marginBottom1em">公告栏</el-row>
+          <el-row>
+            <template v-if="noticeList.length > 0">
+              <el-collapse v-for="(item,id) in noticeList" v-bind:key="id">
+                <el-collapse-item :title="item.title">
+                  <div>{{item.content}}</div>
+                </el-collapse-item>
+              </el-collapse>
+            </template>
+            <template v-else>
+              暂无任何公告
+            </template>
+          </el-row>
+
+        </el-card>
       </el-col>
       <!-- 内容 -->
-      <el-col :span="14">
+      <el-col :span="14" :offset="1">
         <!-- 轮播图数据 -->
         <template>
           <el-carousel :interval="5000" arrow="always">
             <el-carousel-item v-for="(item,index) in imgCard" :key="index">
-              <a v-bind:href="item.url" target="_blank">
+              <a v-bind:href="'http://' + item.url" target="_blank">
                 <img v-bind:src="item.imgUrl"/>
                 <h1>{{item.title}}</h1>
               </a>
@@ -23,7 +38,7 @@
         </template>
         <!-- 博文数据循环 -->
         <template v-for='(item,id) in blogData'>
-          <div v-bind:key="id" class="marginBottom1em">
+          <div v-if="item.isDraft !== 1 && item.onlyMeRead !== 1" v-bind:key="id" class="marginBottom1em">
             <!-- 标题 -->
             <el-row style="text-align: left"><h2>
               <router-link class="aTagWithoutLine" :to="{path:'/details/'+item.bloggerId+'/'+item.id}">{{item.title}}</router-link>
@@ -49,8 +64,12 @@
         </template>
       </el-col>
       <!-- 内容右侧栏目 -->
-      <el-col :span="5">
-        <el-input type="text" placeholder="搜索资源关键词3" clearable></el-input>
+      <el-col :span="3" :offset="1">
+        <el-card>
+          <el-row>
+            <el-col>这里是越哥的征婚广告</el-col>
+          </el-row>
+        </el-card>
       </el-col>
     </el-row>
 
@@ -74,18 +93,19 @@
     methods: {
       handleSizeChange (val) {
         this.pageSize = val
-        // this.queryResource()
+        this.findBlogsByKeyWord()
       },
       handleCurrentChange (val) {
         this.currentPage = val
-        // this.queryResource()
+        this.findBlogsByKeyWord()
       },
       download (id) {
         window.open(this.$http.defaults.baseURL + '/api/sandman/v1/resource/downloadResource?id=' + id)
       },
       findBlogsByKeyWord () { // 根据关键词查询，模糊搜索
         this.$http.get('/api/blog/v1/blog/findByKeyWord?pageNumber=' + this.currentPage + '&size='+ this.pageSize + '&keyWord=' + this.keyWord).then((successData) => {
-          this.blogData = successData.data.data;
+          this.blogData = successData.data.data.blogList;
+          this.totalSize = successData.data.data.totalRow
         })
       },
       getAllCarousel () { // 首页轮播图
@@ -93,9 +113,15 @@
           this.imgCard = successData.data.data;
         })
       },
+      getAllNotice () {
+        this.$http.get('/api/blog/v1/notice/getAllNotice').then((successData) => {
+          this.noticeList = successData.data.data;
+        })
+      },
       dataInit () {
         this.findBlogsByKeyWord()
         this.getAllCarousel()
+        this.getAllNotice()
       },
       getKeyWord (keyWord) {
         this.$router.push({name:'searchBlogList',params: {keyWord: keyWord}})
@@ -110,6 +136,7 @@
         keyWord: '',
         imgCard: [],
         blogData: [],
+        noticeList: [],
         currentPage: 1,
         pageSize: 10,
         totalSize: 0

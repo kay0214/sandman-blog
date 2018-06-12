@@ -20,9 +20,9 @@
             <el-row type='flex' justify='center'>
               <el-button type='primary' @click='login' style='width: 250px'>登录</el-button>
             </el-row>
-            <el-row type='flex' justify='end'>
-              <a @click='forgetPasswd'>忘记密码</a>
-              <a @click='toRegister'>注册</a>
+            <el-row>
+              <el-col :span="12"><a @click='forgetPasswd'>忘记密码</a></el-col>
+              <el-col :span="6" :offset="6"><a @click='toRegister'>注册</a></el-col>
             </el-row>
           </div>
         </el-card>

@@ -5,7 +5,7 @@
       <el-col :offset='div_offset' :span='div_span'>
         <el-card class='box-card'>
           <div slot='header'>
-            <span>SANDMAN 注册</span>
+            <span>Blog 注册</span>
           </div>
           <div id='login' class='login_div'>
             <el-form ref='form' label-width='60px' label-position='right' label-suffix=':'>
@@ -16,7 +16,7 @@
                 <el-input v-model='password' type='password'></el-input>
               </el-form-item>
               <el-form-item label='手机号'>
-                <el-input v-model='mobile' type='number'></el-input>
+                <el-input v-model='mobile' type='text'></el-input>
               </el-form-item>
               <el-form-item label='邮箱'>
                 <el-row>
@@ -48,35 +48,56 @@ import verify from '../../common/verify'
 export default {
   methods: {
     register () {
-      this.$http.post('/api/sandman/v1/user/createUser', { userName: this.username, password: this.password, mobile: this.mobile, email: this.email, validateCode: this.validateCode }).then((successData) => {
-        alert('注册成功')
-        this.$router.push('/login')
-      })
+      if (this.canRegister()){
+        this.$http.post('/api/blog/v1/user/createUser', 'userName=' + this.username + '&password=' + this.password + '&mobile=' + this.mobile + '&email=' + this.email + '&validateCode=' + this.validateCode).then((successData) => {
+          if(successData.data.code === 200){
+            message.infoMsg('注册成功','您已注册成功,欢迎您的使用')
+            this.$router.push('/login')
+          }
+        })
+      }
     },
     goBack () {
       this.$router.go(-1)
     },
-    send_mail () { // 向email发送注册验证码
+    canRegister () {
+      this.canSendEmail()
+      if (!verify.correctCode(this.validateCode)) {
+        message.errorMsg('验证码不正确', '请输入正确的邮箱验证码')
+        return false
+      }
+      return true
+    },
+    canSendEmail () {
+      if (!verify.correctUsername(this.username)){
+        message.errorMsg('用户名不正确', '用户名必须是字母数字下划线的6-16位组合')
+        return false
+      }
+      if (!verify.correctPassword(this.password)){
+        message.errorMsg('密码不正确', '密码必须是字母数字下划线的6-18位组合')
+        return false
+      }
+      if (!verify.correctMobile(this.mobile)){
+        message.errorMsg('手机号不正确', '请先输入正确的手机号')
+        return false
+      }
       if (!verify.correctEmail(this.email)) { // 校验email的正确性，正确则发送验证码，不正确则提示并return
         message.errorMsg('邮箱地址不正确', '请输入正确的电子邮箱地址')
-        return
+        return false
       }
-      // 验证电子邮箱地址是否被其他用户绑定,未被绑定才发送验证码
-      let unused = this.emailUnused(this.email) // 0:未传入联系方式；1:联系方式已经被绑定；2:联系方式未被绑定
-      if (unused) { // 邮箱未被其他用户绑定
-        // 如果email校验通过，就开启倒计时并发送验证码
-        this.setTime()
-        this.$http.post('/api/sandman/v1/validateCode/sendValidateCode', { contact: this.email }) // 发送验证码，不需要回调函数
+      return true
+    },
+    send_mail () { // 向email发送注册验证码
+      if(this.canSendEmail()){
+        console.info('可以发送验证码')
+        // 验证电子邮箱地址是否被其他用户绑定,未被绑定才发送验证码
+        this.emailUnused(this.email) // 0:未传入联系方式；1:联系方式已经被绑定；2:联系方式未被绑定
       }
     },
-    emailUnused (email) { // 验证邮箱是否未被使用，未被使用返回true，否则返回false
-      let exist
-      this.$http.get('/api/sandman/v1/user/contactExist?contact=' + this.email).then((response) => { // 发送验证码，不需要回调函数
-        exist = response.data.exist
-        if (exist !== undefined && exist === 2) {
-          return true
-        } else {
-          return false
+    emailUnused () { // 验证邮箱是否未被使用，未被使用返回true，否则返回false
+      this.$http.get('/api/blog/v1/user/contactExist?contact=' + this.email).then((response) => { // 发送验证码，不需要回调函数
+        if (response.data.data.exist === 2) {
+          this.unused = true
         }
       })
     },
@@ -110,13 +131,25 @@ export default {
       password: '',
       mobile: '',
       email: '',
-      validateCode: ''
+      validateCode: '',
+      unused: false
     }
   },
   mounted () {
     if (screen.width < 800) {
       this.div_offset = 2
       this.div_span = 20
+    }
+  },
+  watch: {
+    unused (newValue,oldValue) {
+      if (newValue === true) { //邮箱未被其他用户绑定
+        // 如果email校验通过，就开启倒计时并发送验证码
+        console.info('联系方式没有被绑定')
+        this.setTime()
+        this.$http.post('/api/blog/v1/validateCode/sendValidateCode', { contact: this.email }) // 发送验证码，不需要回调函数
+        this.unused = false
+      }
     }
   }
 }

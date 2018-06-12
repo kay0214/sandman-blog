@@ -10,9 +10,12 @@ import MyHeader from './components/header/MyHeader'
 import axios from 'axios'
 import message from './common/message'
 import userDetils from './components/common/userDetils'
+import MyFooter from './components/footer/MyFooter'
+
 
 Vue.component('UserDetils', userDetils)
 Vue.component('MyHeader', MyHeader)
+Vue.component('MyFooter',MyFooter)
 Vue.config.productionTip = false
 Vue.prototype.globalObj_ = globalObj
 Vue.use(ElementUI)

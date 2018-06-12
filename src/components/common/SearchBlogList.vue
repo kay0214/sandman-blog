@@ -12,7 +12,7 @@
       <el-col :span="14">
         <!-- 博文数据循环 -->
         <template v-for='(item,id) in blogData'>
-          <div v-bind:key="id">
+          <div v-if="item.isDraft !== 1 && item.onlyMeRead !== 1" v-bind:key="id">
             <!-- 标题 -->
             <el-row style="text-align: left"><h2>
               <router-link class="aTagWithoutLine" :to="{path:'/details/'+item.bloggerId+'/'+item.id}">{{item.title}}</router-link>

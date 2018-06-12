@@ -14,10 +14,10 @@
         <!-- 博客详细内容 -->
         <el-row class="content">
           <!-- 内容左侧栏目 博主个人资料 -->
-          <UserDetils></UserDetils>
+          <UserDetils v-on:getBloggerInfo="getBloggerInfo"></UserDetils>
 
           <!-- 博文详细内容 -->
-          <el-col :span="14" :offset="1">
+          <el-col v-if="thisBlog.length > 0" :span="14" :offset="1">
             <!-- 博文数据循环 -->
             <template v-for='(item,id) in thisBlog'>
               <!-- 博文数据 -->
@@ -40,6 +40,14 @@
               </el-card>
             </template>
           </el-col>
+          <el-col v-if="thisBlog.length === 0" :span="14" :offset="1">
+            <!-- 博文数据循环 -->
+            <template>
+              <el-card>
+                这位博主很懒,暂时没写任何博客
+              </el-card>
+            </template>
+          </el-col>
 
         </el-row>
 
@@ -58,6 +66,9 @@
       },
       getKeyWord (keyWord) {
         this.$router.push({name:'searchBlogList',params: {keyWord: keyWord}})
+      },
+      getBloggerInfo (blogger) {
+        this.blogger = blogger
       }
     },
     data () {
@@ -79,8 +90,7 @@
       console.info('bloggerId'+bloggerId)
       this.$http.get('/api/blog/v1/blog/findByBloggerId?bloggerId=' + bloggerId).then((successData) => {
         this.thisBlog = successData.data.data.blogList;
-        this.blogger = this.thisBlog[0].blogger
-        console.info(this.thisBlog)
+        //this.blogger = this.thisBlog[0].blogger
       })
     },
     mounted () {

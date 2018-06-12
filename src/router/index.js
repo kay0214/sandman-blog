@@ -12,6 +12,9 @@ import commentManage from '@/components/blogger/CommentManage'
 import categoryManage from '@/components/blogger/CategoryManage'
 import login from '@/components/common/login'
 import register from '@/components/common/register'
+import haveNoData from '@/components/common/HaveNoData'
+import modifyInfo from '@/components/common/modifyInfo'
+import myFooter from '@/components/footer/MyFooter'
 Vue.use(Router)
 
 export default new Router({
@@ -83,6 +86,21 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/haveNoData',
+      name: 'haveNoData',
+      component: haveNoData
+    },
+    {
+      path: '/modifyInfo',
+      name: 'modifyInfo',
+      component: modifyInfo
+    },
+    {
+      path: '/myFooter',
+      name: 'myFooter',
+      component: myFooter
     }
   ]
 })
