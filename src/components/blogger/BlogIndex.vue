@@ -64,6 +64,6 @@
   }
   .leftMenu{
     background-color: #e9e9e9;
-    height: 50em;
+    height: 55em;
   }
 </style>
