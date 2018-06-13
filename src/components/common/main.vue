@@ -148,7 +148,6 @@
     created () {
       this.keyWord = this.$route.params.keyWord
       this.dataInit()
-      console.info(this.keyWord)
     },
     mounted () {
       if (screen.width < 800) {

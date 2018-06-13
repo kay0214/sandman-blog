@@ -111,13 +111,11 @@
       getNewBlog (bloggerId) {
         this.$http.get('/api/blog/v1/blog/findByBloggerId?pageNumber=1&size=5&order=createTime&sortType=desc&bloggerId=' + bloggerId).then((successData) => {
           this.newBlog = successData.data.data.blogList;
-          console.info(this.newBlog)
         })
       },
       getHotBlog (bloggerId) {
         this.$http.get('/api/blog/v1/blog/findByBloggerId?pageNumber=1&size=5&order=clickCount&sortType=desc&bloggerId=' + bloggerId).then((successData) => {
           this.hotBlog = successData.data.data.blogList;
-          console.info(this.hotBlog)
         })
       },
       getNewComment (bloggerId) {
@@ -159,7 +157,6 @@
     },
     created () {
       let bloggerId = this.$route.params.bloggerId
-      console.info('userDetils::::'+bloggerId)
       this.getBloggerInfo(bloggerId)
       this.getNewBlog(bloggerId) // 获取最新的5篇文章
       this.getHotBlog(bloggerId)

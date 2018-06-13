@@ -125,14 +125,12 @@
         this.$http.get('/api/blog/v1/comment/getMyComment?pageNumber=' + this.myCommentCurrentPage + '&size=' + this.myCommentPageSize).then((successData) => {
           this.myComment = successData.data.data.commentList;
           this.myCommentTotalSize = successData.data.data.totalRow
-          console.info(this.myComment)
         })
       },
       getCommentMeList () {
         this.$http.get('/api/blog/v1/comment/getCommentMe?pageNumber=' + this.commentMeCurrentPage + '&size=' + this.commentMePageSize).then((successData) => {
           this.commentMe = successData.data.data.commentList;
           this.commentMeTotalSize = successData.data.data.totalRow
-          console.info(this.commentMe)
         })
       },
       deleteComment (id) {

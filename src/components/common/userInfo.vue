@@ -32,7 +32,6 @@
     created () {
       this.id = this.$router.params.id
       this.dataInit()
-      console.info(this.id)
     },
     mounted () {
       if (screen.width < 800) {

@@ -113,16 +113,13 @@
 
         }
         this.getUserInfo()
-        console.info(blogId)
         let regex = /\[replay\].*\[\/replay\]\n/
         let params
         if(this.content.match(regex)){
-          console.info('找到回复的人了')
           let content = this.content.replace(regex,'')
           params = 'blogId=' + blogId + '&content=' + content + '&parentId=' + this.commentId + '&parentName='
             + this.parentName + '&replayed=0'
         }else{
-          console.info('没找到回复的人')
           params = 'blogId=' + blogId + '&content=' + this.content + '&replayed=0' + '&parentId=0'
         }
         this.$http.post('/api/blog/v1/comment/commentBlog', params).then((successData) => {
@@ -186,7 +183,6 @@
     created () {
       let bloggerId = this.$route.params.bloggerId
       let blogId = this.$route.params.blogId
-      console.info('blogId:::::::' + blogId)
       this.dataInit(blogId)
     },
     mounted () {

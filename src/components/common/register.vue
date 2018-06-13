@@ -52,7 +52,7 @@ export default {
         this.$http.post('/api/blog/v1/user/createUser', 'userName=' + this.username + '&password=' + this.password + '&mobile=' + this.mobile + '&email=' + this.email + '&validateCode=' + this.validateCode).then((successData) => {
           if(successData.data.code === 200){
             message.infoMsg('注册成功','您已注册成功,欢迎您的使用')
-            this.$router.push('/login')
+            this.$router.push({name: '/login',params:{from: 'register'}})
           }
         })
       }
@@ -89,7 +89,6 @@ export default {
     },
     send_mail () { // 向email发送注册验证码
       if(this.canSendEmail()){
-        console.info('可以发送验证码')
         // 验证电子邮箱地址是否被其他用户绑定,未被绑定才发送验证码
         this.emailUnused(this.email) // 0:未传入联系方式；1:联系方式已经被绑定；2:联系方式未被绑定
       }
@@ -145,7 +144,6 @@ export default {
     unused (newValue,oldValue) {
       if (newValue === true) { //邮箱未被其他用户绑定
         // 如果email校验通过，就开启倒计时并发送验证码
-        console.info('联系方式没有被绑定')
         this.setTime()
         this.$http.post('/api/blog/v1/validateCode/sendValidateCode', { contact: this.email }) // 发送验证码，不需要回调函数
         this.unused = false

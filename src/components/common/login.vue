@@ -41,12 +41,14 @@ export default {
           return // 请求登录接口返回code!=200,停留在本页面提示用户重新登录
         }
         if (successData) { // 登录成功跳转到首页
-          console.info(successData.data)
           this.globalObj_.userName = this.username
           this.globalObj_.isLogin = true
-          console.info(this.globalObj_.userName)
-          // this.$router.go(-1)
-          this.$router.push('/main')
+          if(this.from === 'register'){
+            this.$router.push('/main')
+          }else{
+            this.$router.go(-1)
+          }
+
         }
       })
     },
@@ -65,10 +67,12 @@ export default {
       // 数据值
       password: '',
       username: '',
+      from: '',
       rememberMe: false
     }
   },
   mounted () {
+    this.from = this.$route.params.from
     if (screen.width < 800) {
       this.div_offset = 2
       this.div_span = 20

@@ -86,7 +86,6 @@
     },
     created () {
       let bloggerId = this.$route.params.bloggerId
-      console.info('bloggerId'+bloggerId)
       this.$http.get('/api/blog/v1/blog/findByBloggerId?bloggerId=' + bloggerId).then((successData) => {
         this.thisBlog = successData.data.data.blogList;
         //this.blogger = this.thisBlog[0].blogger
