@@ -136,7 +136,7 @@
       deleteComment (id) {
         this.$http.get('/api/blog/v1/comment/deleteComment?id=' + id).then((successData) => {
           this.dataInit()
-          message.infoMsg('删除成功','评论已成功删除')
+          message.infoMsgBox('删除成功','评论已成功删除')
         })
       },
       dataInit () {

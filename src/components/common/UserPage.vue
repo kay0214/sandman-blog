@@ -5,7 +5,7 @@
     <!-- 整体页面内容 -->
     <el-row>
       <!-- 博客页整体内容 -->
-      <el-col style="background-image: url('http://39.104.80.30/spkIMG/sandman/blog/content/7/background.jpg')">
+      <el-col style="background-image: url('http://117.48.197.114/blog/background/background.jpg')">
         <!-- 博主nickName -- 左上角 -->
         <el-row>
           <el-col :offset="1"><h1 style="text-align: left">{{blogger.nickName}}的博客</h1></el-col>

@@ -21,7 +21,7 @@ export function correctEmail (email) { // email校验，正确的email返回true
   return true
 }
 export function correctMobile (mobile) { // mobile校验，正确的mobile返回true，否则返回false
-  var mobileRegex =  /^((13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8})$/
+  var mobileRegex =  /^((13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|17[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8})$/
   if (!mobileRegex.exec(mobile)) {
     return false
   }

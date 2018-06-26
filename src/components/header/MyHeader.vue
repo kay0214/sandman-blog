@@ -11,9 +11,7 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-<!--
-          <img align="left" width="50px" height="50px" src="http://39.104.80.30/spkIMG/sandman/blog/content/7/20180530152641ED5D0ECCB7034FC5ACBC753BD9ECCA33.jpg"/>
--->
+
           <el-menu-item index="/main">首页</el-menu-item>
           <el-tooltip class="item" effect="dark" content="敬请期待" placement="top-end">
             <el-menu-item index="/gold" :disabled="true"><i class="el-icon-download"></i>下载</el-menu-item>

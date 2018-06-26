@@ -16,7 +16,7 @@
             <el-col :span="4">
               <el-upload
                 class="avatar-uploader"
-                action="http://39.104.80.30:8081/api/blog/v1/blogger/modifyAvatar"
+                action="http://116.196.80.247:8081/api/blog/v1/blogger/modifyAvatar"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :with-credentials="true">

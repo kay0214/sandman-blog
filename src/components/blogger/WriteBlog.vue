@@ -64,11 +64,13 @@
     methods: {
       publishBlog (isDraft) {
         if(this.title === ''){
-          message.errorMsg('标题不能为空','请重新输入文章标题')
+          message.errorMsg('标题不能为空')
+          // message.errorMsgBox('标题不能为空','请重新输入文章标题')
           return
         }
         if(this.editor.txt.text() === ''){
-          message.errorMsg('内容不能为空','请重新输入文章内容')
+          message.errorMsg('文章内容不能为空')
+          // message.errorMsgBox('内容不能为空','请重新输入文章内容')
           return
         }
         let onlyMeRead
@@ -78,11 +80,13 @@
           onlyMeRead = 0
         }
         if(this.selectCategory === null || this.selectCategory === '' || this.selectCategory === undefined){
-          message.errorMsg('个人分类不能为空','请先选择个人分类')
+          message.errorMsg('请先选择个人分类')
+          // message.errorMsgBox('个人分类不能为空','请先选择个人分类')
           return
         }
         if(this.blogType === null || this.blogType === '' || this.blogType === undefined){
-          message.errorMsg('文章类型不能为空','请先选择文章类型')
+          message.errorMsg('请先选择文章类型')
+          // message.errorMsgBox('文章类型不能为空','请先选择文章类型')
           return
         }
         this.$http.post('/api/blog/v1/blog/saveBlog',{id: this.id, title: this.title, content: this.editor.txt.html(), contentNoTag: this.editor.txt.text(), isDraft: isDraft, blogType: this.blogType,
@@ -140,7 +144,7 @@
       var E = require('wangeditor')
       this.editor = new E('#editor')
       this.editor.customConfig.zIndex = 100
-      this.editor.customConfig.uploadImgServer = 'http://39.104.80.30:8081/api/blog/v1/blog/uploadContentImg'
+      this.editor.customConfig.uploadImgServer = 'http://116.196.80.247:8081/api/blog/v1/blog/uploadContentImg'
       // this.editor.customConfig.uploadImgServer = 'http://localhost:8081/api/blog/v1/blog/uploadContentImg'
       this.editor.customConfig.uploadFileName = 'files'
       this.editor.create()

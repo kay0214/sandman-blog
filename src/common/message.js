@@ -1,5 +1,5 @@
 import ElementUI from 'element-ui'
-export function message (title, message) { // 输出错误信息
+export function errorMsgBox (title, message) { // 输出错误信息
   ElementUI.MessageBox.alert(message, title, { // 第一个参数是内容，第二个参数是标题
     confirmButtonText: '确定',
     center: true,
@@ -7,7 +7,7 @@ export function message (title, message) { // 输出错误信息
     closeOnPressEscape: true
   })
 }
-export function warnMsg (title, message) {
+export function warnMsgBox (title, message) {
   ElementUI.MessageBox.alert(message, title, { // 第一个参数是内容，第二个参数是标题
     confirmButtonText: '确定',
     center: true,
@@ -15,7 +15,7 @@ export function warnMsg (title, message) {
     closeOnPressEscape: true
   })
 }
-export function infoMsg (title, message) {
+export function infoMsgBox (title, message) {
   ElementUI.MessageBox.alert(message, title, { // 第一个参数是内容，第二个参数是标题
     confirmButtonText: '确定',
     center: true,
@@ -23,7 +23,7 @@ export function infoMsg (title, message) {
     closeOnPressEscape: true
   })
 }
-export function successMsg (title, message) {
+export function successMsgBox (title, message) {
   ElementUI.MessageBox.alert(message, title, { // 第一个参数是内容，第二个参数是标题
     confirmButtonText: '确定',
     center: true,
@@ -31,9 +31,42 @@ export function successMsg (title, message) {
     closeOnPressEscape: true
   })
 }
+
+export function successMsg (message) {
+  ElementUI.Message({
+    message: message,
+    type: 'success',
+    center: true
+  })
+}
+export function errorMsg (message) {
+  ElementUI.Message({
+    message: message,
+    type: 'error',
+    center: true
+  })
+}
+export function warnMsg (message) {
+  ElementUI.Message({
+    message: message,
+    type: 'warning',
+    center: true
+  })
+}
+export function infoMsg (message) {
+  ElementUI.Message({
+    message: message,
+    type: 'info',
+    center: true
+  })
+}
 export default {
+  successMsgBox,
+  infoMsgBox,
+  warnMsgBox,
+  errorMsgBox,
   successMsg,
-  infoMsg,
+  errorMsg,
   warnMsg,
-  errorMsg: message
+  infoMsg
 }

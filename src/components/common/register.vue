@@ -51,7 +51,7 @@ export default {
       if (this.canRegister()){
         this.$http.post('/api/blog/v1/user/createUser', 'userName=' + this.username + '&password=' + this.password + '&mobile=' + this.mobile + '&email=' + this.email + '&validateCode=' + this.validateCode).then((successData) => {
           if(successData.data.code === 200){
-            message.infoMsg('注册成功','您已注册成功,欢迎您的使用')
+            message.infoMsgBox('注册成功','您已注册成功,欢迎您的使用')
             this.$router.push({name: '/login',params:{from: 'register'}})
           }
         })
@@ -63,26 +63,31 @@ export default {
     canRegister () {
       this.canSendEmail()
       if (!verify.correctCode(this.validateCode)) {
-        message.errorMsg('验证码不正确', '请输入正确的邮箱验证码')
+        // message.errorMsgBox('验证码不正确', '请输入正确的邮箱验证码')
+        message.errorMsg('验证码格式不正确')
         return false
       }
       return true
     },
     canSendEmail () {
       if (!verify.correctUsername(this.username)){
-        message.errorMsg('用户名不正确', '用户名必须是字母数字下划线的6-16位组合')
+        message.errorMsg('用户名必须是字母数字下划线的6-16位组合')
+        // message.errorMsgBox('用户名不正确', '用户名必须是字母数字下划线的6-16位组合')
         return false
       }
       if (!verify.correctPassword(this.password)){
-        message.errorMsg('密码不正确', '密码必须是字母数字下划线的6-18位组合')
+        message.errorMsg('密码必须是字母数字下划线的6-18位组合')
+        // message.errorMsgBox('密码不正确', '密码必须是字母数字下划线的6-18位组合')
         return false
       }
       if (!verify.correctMobile(this.mobile)){
-        message.errorMsg('手机号不正确', '请先输入正确的手机号')
+        message.errorMsg('手机号码格式不正确')
+        // message.errorMsgBox('手机号不正确', '请先输入正确的手机号')
         return false
       }
       if (!verify.correctEmail(this.email)) { // 校验email的正确性，正确则发送验证码，不正确则提示并return
-        message.errorMsg('邮箱地址不正确', '请输入正确的电子邮箱地址')
+        message.errorMsg('电子邮箱格式不正确')
+        // message.errorMsgBox('邮箱地址不正确', '请输入正确的电子邮箱地址')
         return false
       }
       return true
